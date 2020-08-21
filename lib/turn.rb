@@ -7,17 +7,20 @@ class Turn
   end
 
   def type
-    if @player1.deck.rank_of_card_at(0) == @player2.deck.rank_of_card_at(0) &&
-       @player1.deck.rank_of_card_at(2) == @player2.deck.rank_of_card_at(2)
-      :mutually_assured_destruction
-    elsif @player1.deck.rank_of_card_at(0) != @player2.deck.rank_of_card_at(0)
+    if @player1.deck.rank_of_card_at(0) != @player2.deck.rank_of_card_at(0)
       :basic
+    elsif @player1.deck.rank_of_card_at(2).nil? || @player2.deck.rank_of_card_at(2).nil?
+      :not_enough_cards
+    elsif @player1.deck.rank_of_card_at(0) == @player2.deck.rank_of_card_at(0) &&
+      @player1.deck.rank_of_card_at(2) == @player2.deck.rank_of_card_at(2)
+      :mutually_assured_destruction
     elsif @player1.deck.rank_of_card_at(0) == @player2.deck.rank_of_card_at(0)
       :war
     end
   end
 
   def pile_cards
+    @spoils_of_war.clear
     if type == :basic
       spoils_of_war_adding_basic_type_cards_and_delete_from_deck
     elsif type == :war
@@ -49,7 +52,7 @@ class Turn
   end
 
   def award_spoils(winner)
-    @spoils_of_war.each {|card| winner.deck.add_card(card)}
+    @spoils_of_war.shuffle.each {|card| winner.deck.add_card(card)}
   end
 
   def winner
@@ -58,23 +61,23 @@ class Turn
     elsif type == :war
       war_winner
     elsif type == :mutually_assured_destruction
-      "No Winner"
+      return "No Winner"
     end
   end
 
   def basic_war_winner
     if @player1.deck.rank_of_card_at(0) > @player2.deck.rank_of_card_at(0)
-      @player1
+      return @player1
     else
-      @player2
+      return @player2
     end
   end
 
   def war_winner
     if @player1.deck.rank_of_card_at(2) > @player2.deck.rank_of_card_at(2)
-      @player1
+      return @player1
     else
-      @player2
+      return @player2
     end
   end
 end

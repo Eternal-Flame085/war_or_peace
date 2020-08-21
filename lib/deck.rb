@@ -10,7 +10,11 @@ class Deck
   end
 
   def rank_of_card_at(position)
-    @cards[position].rank
+    if position >= @cards.length
+      return nil
+    else
+      @cards[position].rank
+    end
   end
 
   def percent_high_cards
