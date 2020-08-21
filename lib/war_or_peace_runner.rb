@@ -64,9 +64,6 @@ shuffled_deck = ([card1, card2, card3, card4, card5, card6, card7, card8,
 deck1 = Deck.new(shuffled_deck[0..25])
 deck2 = Deck.new(shuffled_deck[26..51])
 
-deck3 = Deck.new([card1, card2, card3, card4, card5, card6])
-deck4 = Deck.new([card14,card41,card16])
-
 player1 = Player.new("Megan", deck1)
 player2 = Player.new("Aurora", deck2)
 
