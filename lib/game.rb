@@ -13,11 +13,12 @@ class Game
 
   def start
     welcome_message
-    until @turn_counter == 1000000
+    until @turn_counter == 1000002
       puts " "
       game_type = @turn.type
 
-      if game_type == :not_enough_cards || @turn.player1.has_lost? || @turn.player2.has_lost?
+      if game_type == :not_enough_cards || @turn.player1.has_lost? ||
+        @turn.player2.has_lost?
         if @turn.player1.has_lost?
           puts "*~*~*~* #{@turn.player2.name} has won the game! *~*~*~*"
           break
@@ -30,10 +31,11 @@ class Game
       game_functionality
       game_type_bieng_played(game_type)
       @turn_counter += 1
-    end
-    if @turn_counter == 1000000
-      puts ""
-      puts "---- DRAW ----"
+      if @turn_counter == 1000001
+        puts ""
+        puts "---- DRAW ----"
+        break
+      end
     end
   end
 
