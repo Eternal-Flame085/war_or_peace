@@ -2,11 +2,20 @@ require "./lib/card"
 require "./lib/deck"
 require "./lib/player"
 require "./lib/turn"
+require "./lib/card_generator"
 class Game
   attr_reader :turn
 
-  def initialize(turn)
-    @turn = turn
+  def initialize
+    shuffled_deck = CardGenerator.new("lib/cards.txt").cards.shuffle
+    deck1 = Deck.new(shuffled_deck[0..25])
+    deck2 = Deck.new(shuffled_deck[26..51])
+
+    player1 = Player.new("Megan", deck1)
+    player2 = Player.new("Aurora", deck2)
+
+    @turn = Turn.new(player1, player2)
+
     @turn_counter = 1
     @round_winner = ""
   end
